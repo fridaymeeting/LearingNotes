@@ -1,4 +1,5 @@
 ### Using the Unity Interface Tutorial
+
 **Scene View**
 **Tool change:** QWERT
 
@@ -17,6 +18,7 @@
 **Inspector Debug Mode**
 
 ### Roll-a-ball Tutorial
+
 **Principle:**
 Test early and test often.
 Use <u>contrast color</u> and <u>motion</u> to attract the player.
@@ -64,7 +66,30 @@ gameObject.**CompareTag(tag)** is more efficient than gameObject.tag == tag. Tag
 **Collider:** The physics system thinks a single solid object shouldn't be in the middle of another single solid object. The physics engine's solution is to push the two objects apart by adding forces to any attached rigidbody.
 It's fairly common for colliders to overlap each other when laying out levels using static non-moving objects.
 
+### Space Shooter Tutorial
+
+**mesh collider:** not performant, use compound collider of primitive colliders instead. in case have to use, use simplified mesh.
+
+**VFX:** billboard, always facing the camera
+
+**move the player or the camera?**
+
+**lights come from:** Light Component, Camera clear flags(skybox or solid colour), render settings/ambient light
+
+**ambient light:** from no fixed point(have no directionality) and lights all surfaces in the scene. used to add a general colour or full white light to all objects in the scene. set to black to turn off.
+
+**directional light:** only rotation, not position works
+
+**3 point lighting system:** a main(key) light, a fill light and a rim light to show off the shapes of objects and give a good sense of atmosphere
+
+**main(key) light:** brightest and most important. tilt to see the shape but not wash it out. feel like the light from a nearby sun, increase the intensity to give a hot feeling. seem realistic for some deep space environment
+
+**fill light:** the other side is far too dark, to light this side to fill in the shadows of the far side in a way that compliments the main light. reduced intensity and a hint of blue will tell that this is a secondary light. rotate to catch the rear edge but on the same side as the fill. show the edge well but also acting like a second fill light, due to how much light spilled on the object, rotate and drop the intensity
+
+**rim light:** fairly subtle. use pure white to be fairly clear and stand out when mixing in with the fill light. light the rear in a way that compliments the fill light.
+
 ### Beginner Gameplay Scripting
+
 **Do-while loop:** ended by ;
 
 **Update():** Called just before every frame; Used for moving non-physics objects, simple timers, receiving input; update interval times vary
@@ -83,7 +108,7 @@ Mathf/Vector3/Color.**Lerp**(from, to, percentage)
 
 **SmoothDamp:** used to smooth a value over time
 
-**GetButtion**>**GetKey**
+**GetButton**>**GetKey**
 
 **GetAxis:** (sensitivity + gravity)/GetAxisRaw(1/0, not smooth), snap(up + down = 0)
 
@@ -106,21 +131,22 @@ private int experience;
 public int Experience {
     get { return experience; }
     set { experience = value; }
-} 
+}
 
 public int Level {
     get { return experience / 1000; }
     set { experience = value * 1000; }
-} 
+}
 
 public int Health{ get; set; }
 ```
-**Proporties:** explicit defined get and set (also shorthand syntax) to encapsulate fields and gain control of access out side the class, used for security check/read-only/write-only
+
+**Properties:** explicit defined get and set (also shorthand syntax) to encapsulate fields and gain control of access out side the class, used for security check/read-only/write-only
 
 ```cs
 Input.GetButtonDown(“Fire1”);
 Vector3.zero;
-public class Enemy { 
+public class Enemy {
     public static int enemyCount = 0;
     public Enemy() { enemyCount++; }
 }
@@ -146,9 +172,9 @@ public class Enemy {
 
 ```cs
 // declared outside any class
-public interface IAbcable<T> { 
+public interface IAbcable<T> {
     returnType functionName(argList);
-} 
+}
 
 class ABC: MonoBehaviuor, IAbcable<typeName> {
     public returnType functionName(argList){ … }
@@ -162,8 +188,8 @@ ClassA implements InterfaceB, must public declare all of the methods, properties
 **List:** in order to use `Sort()`, implement IComparable<T> public int CompareTo(TypeName other)
 
 ```cs
-public static class ExtensionMethods { 
-    public static void ResetTransformation(this Transform trans) {     
+public static class ExtensionMethods {
+    public static void ResetTransformation(this Transform trans) {
         trans.position = Vector3.zero;
         trans.localRotation = Quaternion.identity;
         trans.localScale = new Vector3(1, 1, 1);
@@ -177,7 +203,7 @@ transform.ResetTransformation();
 
 must be placed in a non-generic static class(create a class specifically to contain them), used like instance method, static themselves. use ‘this’ before the typeName of the first parameter(the type being extended, will be the calling object implicitly).
 
-**Dictionary:** using System.Collections.Generic; TryGetValue(keyType key) safer(direct access will throw exception when not exists) but slightly slower. 
+**Dictionary:** using System.Collections.Generic; TryGetValue(keyType key) safer(direct access will throw exception when not exists) but slightly slower.
 
 ```cs
 IEnumerator FunctionName(argList){
@@ -199,9 +225,9 @@ StopCoroutine(FunctionName);
 
 ![Lerp and Slerp](https://github.com/MilkyW/LearnUnityEveryday/blob/master/Pictures/Lerp%20and%20Slerp.png?raw=true)
 
-**Lurp:** linear interpolation, interpolate evenly
+**Lerp:** linear interpolation, interpolate evenly
 
-**Slurp:** spherical interpolation, interpolate on a curve(start and stop slower, faster in the middle)
+**Slerp:** spherical interpolation, interpolate on a curve(start and stop slower, faster in the middle)
 
 ```cs
 [Attribute(argList)]
@@ -222,7 +248,7 @@ delegateName(argList);
 
 **Delegates:** create robust and complex behaviours
 
-muti-casting:  `delegateName += FunctionName;` execute several functions in a single call(stack functionality) use `-=` to remove. check `!= null` before calling
+multi-casting:  `delegateName += FunctionName;` execute several functions in a single call(stack functionality) use `-=` to remove. check `!= null` before calling
 
 shouldn't count on its order.
 
@@ -240,6 +266,7 @@ public static event ClickAction OnClicked;
 [MessageSystem](https://github.com/KEEMU/MessageSystem)
 
 ### AR Foundation
+
 Unity 2018
 Package Manager
 
@@ -248,22 +275,7 @@ Package Manager
 OnStateEnter/Update/Exit->Animation Clip in Animator
 
 ### UGUI
+
 **CanvasRenderer:** 并不是Renderer的子类。
 
 **Event Trigger in Canvas:** No <u>canvas renderer</u> in the area, <u>UGUI block</u>: Transition->Pointer ScrollView Content->Drag
-
-### iOS Develope
-![Apple Develop](https://github.com/MilkyW/LearnUnityEveryday/blob/master/Pictures/Apple%20Develop.png?raw=true)
-
-**Apple Developer account:**
-
-[Building iOS Application](https://confluence.hq.unity3d.com/display/QA/Building+iOS+Application)
-
-**macOS, Xcode and iOS SDK:**
-**Xcode 10.1:** highest for macOS 10.13.x
-
-[Xcode_10.1.xip](https://drive.google.com/file/d/1L0A81DdYBrOUYlG1Xi1C49_uSvSG_71l/view?usp=sharing)
-
-[Xcode_10.1.xip](https://download.developer.apple.com/Developer_Tools/Xcode_10.1/Xcode_10.1.xip)
-
-**iOS SDK:** copy from higher versions of Xcode
